@@ -1,112 +1,60 @@
 <!doctype html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AR Pokémon Battle</title>
-    <style>
-      /* Garante que o body ocupe a tela toda sem barras de rolagem */
-      body {
-        margin: 0;
-        overflow: hidden;
-        width: 100vw;
-        height: 100vh;
-        font-family: sans-serif;
-        background: #000; /* Fundo preto ajuda a ver o 3D se a câmera falhar */
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AR Pokémon Battle</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
 
-      /* Container do MindAR. Ele deve ocupar a tela toda */
-      #mindar-container {
-        width: 100%;
-        height: 100%;
-        position: relative;
-        overflow: hidden;
-      }
+<body>
 
-      /* Botão central de iniciar. Deve ficar na frente de TUDO */
-      #battleBtn {
-        position: absolute;
-        bottom: 50px;
-        left: 50%;
-        transform: translateX(-50%);
-        padding: 15px 30px;
-        background: #ffcb05; /* Amarelo Pokémon */
-        color: #2a75bb; /* Azul Pokémon */
-        border: 4px solid #2a75bb;
-        border-radius: 10px;
-        font-weight: bold;
-        font-size: 18px;
-        display: none; /* Aparece via JS */
-        z-index: 999; /* Valor alto para garantir que fique na frente */
-        cursor: pointer;
-        transition: transform 0.1s;
-      }
+  <button id="battleBtn">INICIAR BATALHA</button>
 
-      #battleBtn:active {
-        transform: translateX(-50%) scale(0.95);
-      }
+  <!-- HUD 1 -->
+  <div id="hud1">
+    <img src="imgs/infernape.png" alt="Infernape" class="pokemon-image">
 
-      /* Painel de Batalha (UI). Também deve ficar na frente */
-      #battleUI {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        background: rgba(0, 0, 0, 0.85); /* Fundo semi-transparente */
-        color: white;
-        display: none; /* Aparece via JS */
-        padding: 20px 0;
-        z-index: 999; /* Valor alto */
-        text-align: center;
-      }
-      #battleLog {
-        font-size: 16px;
-        color: #ffcb05; /* Amarelo Pokémon para destacar */
-        margin-top: 10px;
-        font-style: italic;
-        min-height: 20px;
-      }
-
-      #status {
-        font-size: 20px;
-        margin-bottom: 15px;
-        line-height: 1.5;
-      }
-
-      #moves button {
-        margin: 5px;
-        padding: 12px 20px;
-        background: #fff;
-        border: none;
-        border-radius: 5px;
-        font-weight: bold;
-        color: #333;
-        cursor: pointer;
-        transition: background 0.2s;
-      }
-
-      #moves button:hover {
-        background: #ddd;
-      }
-    </style>
-  </head>
-  <body>
-    <button id="battleBtn">INICIAR BATALHA</button>
-    <div id="battleUI">
-      <div id="status"></div>
-      <div id="battleLog">Aguardando comando...</div>
-      <div id="moves"></div>
+    <div id="player1">
+      <div class="pokemon-name">INFERNAPE</div>
+      <div class="hp-bar">
+    <div id="hp1" class="hp-fill"></div> <!-- 👈 ADD ID -->
+  </div>
     </div>
+  </div>
 
-    <script type="importmap">
-      {
-        "imports": {
-          "three": "https://unpkg.com/three@0.150.1/build/three.module.js",
-          "three/addons/": "https://unpkg.com/three@0.150.1/examples/jsm/",
-          "mindar-image-three": "https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-three.prod.js"
-        }
-      }
-    </script>
+  <!-- HUD 2 -->
+  <div id="hud2">
+    <img src="imgs/pikachu.png" alt="Pikachu" class="pokemon-image">
 
-    <script type="module" src="app.js"></script>
-  </body>
-</html>
+    <div id="player2">
+      <div class="pokemon-name">PIKACHU</div>
+      <div class="hp-bar">
+    <div id="hp2" class="hp-fill"></div> <!-- 👈 ADD ID -->
+  </div>
+    </div>
+  </div>
+
+  <!-- UI de batalha -->
+  <div id="battleUI">
+    <div id="status"></div>
+    <div id="battleLog">Aguardando comando...</div>
+    <div id="moves"></div>
+  </div>
+
+  <!-- IMPORT MAP -->
+  <script type="importmap">
+    
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.150.1/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.150.1/examples/jsm/",
+      "mindar-image-three": "https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-three.prod.js"
+    }
+  }
+  </script>
+
+  <script type="module" src="app.js"></script>
+
+</body>
+</html> 

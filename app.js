@@ -21,6 +21,9 @@ document.addEventListener("DOMContentLoaded", () => {
 const start = async () => {
   console.log("Iniciando sistema AR...");
 
+  document.getElementById("hud1").style.visibility = "hidden"; // Esconde os modelos 3D durante a batalha
+  document.getElementById("hud2").style.visibility = "hidden";
+
   const mindarThree = new MindARThree({
     container: document.body,
     imageTargetSrc: "targets.mind",
@@ -89,8 +92,8 @@ const start = async () => {
       pokemons[1] = {
         name: "Infernape", hp: 100, maxHp: 100,
         moves: [
-          { name: "Brasas", damage: 14 },
-          { name: "Arranhão", damage: 9 },
+          { name: "Raging Fury", damage: 14 },
+          { name: "Fire Spin", damage: 9 },
         ],
       };
       checkBattleReady();
@@ -127,13 +130,17 @@ function checkBattleReady() {
 // ================= LÓGICA DE BATALHA =================
 
 function startBattle(p1, p2) {
+  document.getElementById("hud1").style.display = "flex";
+document.getElementById("hud2").style.display = "flex";
   player = p1; 
   enemy = p2; 
   isPlayerTurn = true;
   
   document.getElementById("battleUI").style.display = "block";
   battleBtn.style.display = "none";
-  
+  document.getElementById("hud1").style.visibility = "visible"; // Esconde os modelos 3D durante a batalha
+  document.getElementById("hud2").style.visibility = "visible";
+
   updateUI(); 
   showMoves();
 }
@@ -143,8 +150,22 @@ function updateUI() {
     <strong>${player.name}</strong> HP: ${Math.max(player.hp, 0)}/${player.maxHp}<br>
     <strong>${enemy.name}</strong> HP: ${Math.max(enemy.hp, 0)}/${enemy.maxHp}
   `;
-}
 
+  // porcentagem de vida
+  const playerPercent = Math.max(player.hp, 0) / player.maxHp * 100;
+  const enemyPercent = Math.max(enemy.hp, 0) / enemy.maxHp * 100;
+
+  const hp1 = document.getElementById("hp1");
+  const hp2 = document.getElementById("hp2");
+
+  // largura da barra
+  hp1.style.width = playerPercent + "%";
+  hp2.style.width = enemyPercent + "%";
+
+  // cor dinâmica (tipo Pokémon)
+  setHPColor(hp1, playerPercent);
+  setHPColor(hp2, enemyPercent);
+}
 function showMoves() {
   const movesDiv = document.getElementById("moves");
   movesDiv.innerHTML = "";
@@ -212,4 +233,13 @@ function checkWin() {
     return true;
   }
   return false;
+}
+function setHPColor(bar, percent) {
+  if (percent > 50) {
+    bar.style.background = "linear-gradient(to right, #4caf50, #8bc34a)"; // verde
+  } else if (percent > 20) {
+    bar.style.background = "linear-gradient(to right, #ffeb3b, #ffc107)"; // amarelo
+  } else {
+    bar.style.background = "linear-gradient(to right, #f44336, #b71c1c)"; // vermelho
+  }
 }
